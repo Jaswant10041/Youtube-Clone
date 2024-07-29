@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import parseRecommendedData from "../../utils/parseRecommendedData";
 // const API_KEY = process.env.REACT_APP_YOUTUBE_DATA_API_KEY;
-const API_KEY = 'AIzaSyBi9x44g7VKYjle7Ys8SSzYhhfLXz99mCs';
+const API_KEY = 'AIzaSyAeH33tM24lLbrl5fzrWqpec0w0-E3jWJA';
 const baseURL = 'https://youtube.googleapis.com/youtube/v3';
 
 export const getRecommendedVideos = createAsyncThunk(
@@ -18,16 +18,18 @@ export const getRecommendedVideos = createAsyncThunk(
             const response = await fetch(url);
             const data = await response.json();
             const items = data.items;
-            // console.log(items);
-            const videoIds = items.filter(item=> item.contentDetails && item.contentDetails.upload && item.contentDetails.upload.videoId)
-            .map(item => item.contentDetails.upload.videoId).join(',');
+            console.log("items1: ");
+            console.log(items);
+            const videoIds = items.filter(item=> item.contentDetails && item.contentDetails.playlistItem && item.contentDetails.playlistItem.resourceId && item.contentDetails.playlistItem.resourceId.videoId)
+            .map(item => item.contentDetails.playlistItem.resourceId.videoId).join(',');
             // console.log(videoIds);
             // Fetch video details
             const detailsUrl = `${baseURL}/videos?part=snippet,contentDetails,statistics&id=${videoIds}&key=${API_KEY}`;
             const detailsResponse = await fetch(detailsUrl);
             const detailsData = await detailsResponse.json();
             const items2 = detailsData.items;
-            // console.log(items2)
+            console.log("items2: ");
+            console.log(items2)
             const parsedData = await parseRecommendedData(items2, videoId);
 
             return { parsedData };

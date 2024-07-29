@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 // import parseRecommendedData from "../../utils/parseRecommendedData";
 // const API_KEY = process.env.REACT_APP_YOUTUBE_DATA_API_KEY;
 import parseVideoDetails from "../../utils/parseVideoDetails";
-const API_KEY = 'AIzaSyBi9x44g7VKYjle7Ys8SSzYhhfLXz99mCs';
+const API_KEY = 'AIzaSyAeH33tM24lLbrl5fzrWqpec0w0-E3jWJA';
 const baseURL = 'https://youtube.googleapis.com/youtube/v3';
 
 export const getVideoDetails = createAsyncThunk(

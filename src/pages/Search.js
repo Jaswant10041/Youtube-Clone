@@ -38,7 +38,9 @@ export default function Home() {
             <div className='py-8 pl-8 flex flex-col gap-5 w-full'>
               <InfiniteScroll dataLength={videos.length} next={()=>dispatch(getSearchPageVideos(true))}
               hasMore={!!nextPageToken}
-              loader={<Spinner/>}
+              loader={<div className="flex justify-center items-center h-full">
+                  <Spinner />
+                </div>}
               height={650}
               >
               

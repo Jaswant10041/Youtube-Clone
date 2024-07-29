@@ -116,7 +116,7 @@ const Watch = () => {
   const recommendedVideo = useAppSelector(
     (state) => state.youtubeApp.recommendedVideo
   );
-  // console.log(recommendedVideo);
+  console.log(recommendedVideo);
   const comments=useAppSelector((state)=>state.youtubeApp.comments)
   useEffect(() => {
     if (id) {
@@ -135,7 +135,7 @@ const Watch = () => {
     <>
       {currentPlaying && currentPlaying.videoId === id && (
         <div className="max-h-screen flex flex-col">
-          <div className="h-7.5vh sticky top-0">
+          <div className="h-7.5vh opacity-95 sticky top-0">
             <Navbar />
           </div>
           <div className="grid grid-cols-[60%_40%] gap-4">
@@ -164,10 +164,11 @@ const Watch = () => {
                         className="w-10 h-10 rounded-full"
                       />
                     </div>
-                    <div>
-                      <h2 className="font-bold pt-2 px-2">
+                    <div flex flex-col>
+                      <div className="font-bold px-2">
                         {currentPlaying.channelInfo.name}
-                      </h2>
+                      </div>
+                      <div className="text-sm pl-2">{currentPlaying.channelInfo.subscribers} subscribers</div>
                     </div>
                     <div>
                       <button className="bg-white text-black px-4 h-8 w-50 py-2 pb-8 rounded-full text-center hover:bg-slate-200">
@@ -224,37 +225,37 @@ const Watch = () => {
             <div className="overflow-y-auto p-2 mr-10">
               <h2 className="font-bold mb-4">Recommended Videos</h2>
               {recommendedVideo.map((video) => (
-                <div className="flex items-center mb-4" key={video.videoId}>
-                <div className="relative">
-                    <span
-                      className="absolute bottom-3 right-1 text-sm px-1 py-0.5 z-10 bg-gray-800 rounded-md">
+                <Link to={`/watch/${video.videoId}`} key={video.videoId}>
+                <div className="grid grid-cols-[1fr_2fr] gap-1 mb-4">
+                  <div className="relative">
+                    <span className="absolute bottom-3 right-1 text-sm px-1 py-0.5 z-10 bg-gray-800 rounded-md">
                       {video.videoDuration}
                     </span>
-                <Link to={`/watch/${video.videoId}`}>
-                  <img
-                    src={video.channelInfo.image}
-                    alt="videoImage"
-                    className="w-32 h-18 rounded-xl"
-                  />
-                </Link>
-                </div>
-                  <div className="ml-4">
-                    <h3 className="font-bold">{video.videoTitle}</h3>
-                  
-                      <p>{video.channelInfo.name}</p>
-                    <div className="flex">
-                      <div>
-                        <span className="after:content-['•'] after:mx-1">
-                          {video.videoViews} views
-                        </span>
-                      </div>
-                      <div>
-                        <span>{video.videoAge}</span>
-                      </div>
+                    <img
+                      src={video.channelInfo.image}
+                      alt={video.videoTitle}
+                      className="rounded-xl w-full h-full overflow-clip"
+                    />
+                  </div>
+                  <div className="ml-4 flex flex-col">
+                  <h3 className="font-bold line-clamp-2">{video.videoTitle}</h3>
+                    <div className="flex py-2">
+                      <img src={video.channelInfo.image}
+                        alt="channelImage"
+                        className="h-9 w-9 rounded-full"/>
+                        
+                        <p className="text-sm text-gray-500 pt-2 pl-2">{video.channelInfo.name}</p>
+                    </div>
+                    
+                    
+                    <div className="text-sm text-gray-500">
+                      <span className="after:content-['•'] after:mx-1">{video.videoViews} views</span>
+                      <span>{video.videoAge}</span>
                     </div>
                   </div>
-                  
                 </div>
+                </Link>
+                
               ))}
             </div>
           </div>

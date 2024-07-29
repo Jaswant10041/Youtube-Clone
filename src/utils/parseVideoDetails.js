@@ -1,7 +1,7 @@
 import React from 'react'
 import convertRawtoString from './convertRawtoString';
 import timeSince from './timeSince';
-const API_KEY = 'AIzaSyBi9x44g7VKYjle7Ys8SSzYhhfLXz99mCs';
+const API_KEY = 'AIzaSyAeH33tM24lLbrl5fzrWqpec0w0-E3jWJA';
 const baseURL = 'https://youtube.googleapis.com/youtube/v3';
 const parseVideoDetails=async(item)=>{
     const url2=`${baseURL}/channels?part=snippet,statistics&id=${item.snippet.channelId}&key=${API_KEY}`;

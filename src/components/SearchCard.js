@@ -11,17 +11,20 @@ const Card = ({ data }) => {
           </span>
           
         <Link to={`/watch/${data.videoId}`}>
-        <img src={data.videoThumbnail} alt="ThumbNail" className="h-44 w-72" />
+        <img src={data.videoThumbnail} alt="ThumbNail" className="h-90 w-190 rounded-md hover:rounded-none" />
         </Link>        
         </div>
       <div className="flex gap-1 flex-col">
+      <Link to={`/watch/${data.videoId}`}>
           <h3 className="max-w-2xl">
+          
             <a href='#' className="line-clamp-2">
               {data.videoTitle}
             </a>
           </h3>
           <div className="text-xs text-gray-400">
             <div>
+           
               <div>
                   <span className="after:content-['•'] after:mx-1">
                   {data.videoViews}
@@ -32,7 +35,7 @@ const Card = ({ data }) => {
               </div>
             </div>
           </div>
-        
+          </Link>
          <div className="min-w-fit my-2">
           <a href='#' className="flex items-center gap-2 text-xs text-gray-400">
             <img src={data.channelInfo.image}

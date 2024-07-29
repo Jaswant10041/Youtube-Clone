@@ -29,7 +29,11 @@ export default function Home() {
           videos.length ? (
             <InfiniteScroll dataLength={videos.length} next={()=>dispatch(getHomePageVideos(true))}
             hasMore={!!nextPageToken}
-            loader={<Spinner/>}
+            loader={
+            <div className="flex justify-center items-center h-full">
+                  <Spinner />
+                </div>
+                }
             height={650}
             >
             <div className='grid gap-y-4 gap-x-4 grid-cols-3 p-4'>

@@ -9,6 +9,8 @@ import {useLocation,useNavigate} from 'react-router-dom';
 import { clearVideos,changeSearchTerm,clearSearchTerm } from "../features/youtube/youtubeSlice";
 import { useAppDispatch,useAppSelector } from "../hooks/useApp";
 import {getSearchPageVideos} from '../store/reducers/getSearchPageVideos'
+import { Link } from "react-router-dom";
+import Sidebar from "./Sidebar";
 const Navbar = () => {
   const location=useLocation();
   const navigate=useNavigate();
@@ -21,12 +23,17 @@ const Navbar = () => {
       dispatch(getSearchPageVideos(false));
     }
   }
+  const handleOnclick=()=>{
+    <Sidebar/>
+  }
   return (
     <div className="flex justify-between items-center px-14 h-14  bg-[#212121] opacity-95 sticky top-0 z-50">
       <div className="flex gap-8 py-3 items-center text-2xl">
+        <Link to={`/`}>
         <div>
-          <GiHamburgerMenu />
+          <GiHamburgerMenu  onClick={handleOnclick}/>
         </div>
+        </Link>
         <div className="flex gap-1 items-center justify-center">
           <BsYoutube className="text-3xl text-rose-600" />
           <span className="text-2xl">YouTube</span>

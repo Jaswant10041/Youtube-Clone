@@ -4,6 +4,7 @@ import convertRawtoString from './convertRawtoString';
 import timeSince from './timeSince';
 import parseVideoDuration from './parseVideoDuration';
 const parseRecommendedData = (items, currentVideoId) => {
+    console.log("parseRecommended");
     console.log(items);
     return items.map(item => {
         const snippet = item.snippet;

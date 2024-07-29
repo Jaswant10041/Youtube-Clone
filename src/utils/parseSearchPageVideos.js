@@ -4,13 +4,14 @@ import convertRawtoString from './convertRawtoString';
 import timeSince from './timeSince';
 const API_KEY = 'AIzaSyAeH33tM24lLbrl5fzrWqpec0w0-E3jWJA';
 const baseURL = 'https://youtube.googleapis.com/youtube/v3';
-const parseData =async(items) => {
+const parseSearchPageVideos =async(items) => {
     try{
+        // console.log(items);
         const videoIds=[];
         const channelIds=[];
         items.forEach((item)=>{
             channelIds.push(item.snippet.channelId);
-            videoIds.push(item.id);
+            videoIds.push(item.id.videoId);
         });
         // console.log("items is");
         // console.log(items);
@@ -18,7 +19,7 @@ const parseData =async(items) => {
         const response1=await fetch(`${baseURL}/channels?part=snippet,contentDetails&id=${channelIds.join(",")}&key=${API_KEY}`);
         const {items:channelsData}=await response1.json();
         // console.log("channelsData is");
-        // console.log(channelsData);
+        
 
         const parsedChannelsData=[];
         
@@ -32,12 +33,13 @@ const parseData =async(items) => {
         const {items:videosData}=await response2.json();
         // console.log("videosData is");
         // console.log(videosData);
-        const parseData=[];
+        let parseData=[];
         items.forEach((item,index)=>{
             const {image:channelImage}=parsedChannelsData.find((data)=>data.id===item.snippet.channelId);
-            if(channelImage){
+            const videoData = videosData.find(video => video.id === item.id.videoId);
+            if(channelImage && videoData){
                 parseData.push({
-                    videoId:item.id,
+                    videoId:item.id.videoId,
                     videoTitle:item.snippet.title,
                     videoDescription:item.snippet.description,
                     videoThumbnail:item.snippet.thumbnails.medium.url,
@@ -48,26 +50,22 @@ const parseData =async(items) => {
                         name:item.snippet.channelTitle
                     },
                     videoDuration:parseVideoDuration(
-                        videosData[index].contentDetails.duration
+                        videoData.contentDetails.duration
                     ),
                     videoViews:convertRawtoString(
-                        videosData[index].statistics.viewCount
+                        videoData.statistics.viewCount
                     ),
                     videoAge:timeSince(new Date(item.snippet.publishedAt))
                 });
-                // console.log(parseData);
             }
+            // console.log(parseData);
         });
+        console.log(parseData);
         return parseData;
     }
     catch(err){
         console.log(err); 
     }
-  return (
-    <div>
-      
-    </div>
-  )
 }
 
-export default parseData;
+export default parseSearchPageVideos;
